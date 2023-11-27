@@ -85,7 +85,7 @@ struct Response {
  
 fn encode_token(id_user: i32) -> String {
     let id: i32 = id_user;
-    let exp: usize = (Utc::now() + Duration::days(365)).timestamp() as usize;
+    let exp: usize = (Utc::now() + Duration::hours(1)).timestamp() as usize;
     let claims: Claims = Claims { id:id.try_into().unwrap() , exp };
     let token: String = encode(
 	&Header::default(),
