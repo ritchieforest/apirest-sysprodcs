@@ -1,0 +1,26 @@
+[package]
+name = "apirest-sysprodcs"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4"
+tiberius = {version ="0.12.2",features=["chrono"]}
+async-std = {version = "1.12.0", features = ["attributes"]}
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0.107" }
+anyhow = {version='1.0.34'}
+log="^0.4"
+env_logger="0.10"
+actix-cors = "0.6"
+actix-service="2.0.2"
+
+# DEPENDENCIES SPECIFIC TO AUTH 
+jsonwebtoken = "9.1.0"
+futures = "0.3.24"
+futures-util = "0.3.24"
+chrono = "0.4.22"
+
+ 
