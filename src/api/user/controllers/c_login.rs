@@ -1,26 +1,19 @@
 
 use crate::{errors::{AppError,AppErrorType::NotFoundError}, api::user::{self, UserLogging}}; 
 use async_std::net::TcpStream;
-use tiberius::{Client};
+use tiberius::Client;
 use crate::database::database_mssql;
 use serde_json::Value;
 use std::sync::{Arc, Mutex};
 
-use actix_web::{ HttpResponse,  web };
 use jsonwebtoken::{
     encode,
-    decode,
-    Algorithm,
-    Validation,
     Header,
     EncodingKey,
-    DecodingKey,
-    TokenData,
-    errors::Error as JwtError,
 };
 use serde::{ Serialize, Deserialize };
 use chrono::{ Utc, Duration };
-use crate::extractors_token::{ Claims };
+use crate::extractors_token::Claims;
 
 
 
@@ -85,7 +78,7 @@ struct Response {
  
 fn encode_token(id_user: i32) -> String {
     let id: i32 = id_user;
-    let exp: usize = (Utc::now() + Duration::hours(1)).timestamp() as usize;
+    let exp: usize = (Utc::now() + Duration::minutes(2)).timestamp() as usize;
     let claims: Claims = Claims { id:id.try_into().unwrap() , exp };
     let token: String = encode(
 	&Header::default(),

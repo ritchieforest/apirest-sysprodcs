@@ -35,7 +35,8 @@ pub async fn s_user_inf_c_sp(
     //println!("{:?}", r);
 }
 // Example on how it probably should be handled
-pub async fn protected_route(auth_token: AuthenticationToken) -> HttpResponse {
-    println!("{:#?}", auth_token);
-    HttpResponse::Ok().json(Response { message: "Authorized".to_owned() })
+pub async fn verifyToken(auth_token: AuthenticationToken) -> HttpResponse {
+    HttpResponse::Ok().json(Response { 
+        message: "Authorized".to_owned()
+    })
 }

@@ -1,10 +1,10 @@
 use actix_web::web;
-use crate::api::user::services::s_login::{s_user_inf_c_sp,protected_route};
+use crate::api::user::services::s_login::{s_user_inf_c_sp,verifyToken};
 
 
 pub fn config(cfg:&mut web::ServiceConfig){
     cfg.route("api/user/verifyLogin",web::post().to(s_user_inf_c_sp))
-    .route("api/user/protected",web::get().to(protected_route))
+    .route("api/user/verifyToken",web::get().to(verifyToken))
     
     ;
 

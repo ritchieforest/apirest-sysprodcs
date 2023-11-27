@@ -1,12 +1,13 @@
-use actix_web::{error::ResponseError, http::StatusCode, HttpResponse, body::None};
+use actix_web::{error::ResponseError, http::StatusCode, HttpResponse};
 use serde::Serialize;
 use std::fmt;
-use tiberius::error::{Error as TiberiusError,TokenError,IoErrorKind};
+use tiberius::error::{Error as TiberiusError,TokenError};
 use anyhow::Error as AnyError;
 #[derive(Debug)]
 pub enum AppErrorType {
     DbError,
     NotFoundError,
+
 }
 
 #[derive(Debug)]
