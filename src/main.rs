@@ -6,6 +6,8 @@ mod authentication;
 mod extractors_token;
 use crate::database::database_mssql::connect;
 use crate::api::user::route_users;
+use crate::api::configuration::route_configuration;
+
 use actix_web::{
     http::header,
     web,App, HttpServer 
@@ -48,6 +50,8 @@ async fn main() -> std::io::Result<()> {
         .wrap(Logger::new("%a %{User-Agent}i"))
         //.wrap(bearer_middleware)
         .configure(route_users::config)
+        .configure(route_configuration::config)
+
 
     })
     .bind(("0.0.0.0", 8080))?

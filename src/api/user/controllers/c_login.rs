@@ -38,14 +38,14 @@ pub async fn c_user_inf_c_sp(
 
             for row in i.into_iter() {
                 let _id_user: Option<i32> = row.get(2);
-                let _id_employe: Option<i32> = row.get(3);
+                let _id_empresa: Option<i32> = row.get(3);
                 let _user_active: Option<bool> = row.get(0);
                 let _usuario: Option<&str> = row.get(1);
                 let _token=encode_token(_id_user.unwrap());
 
                 _user_loggin=UserLogging{
                     id_user:_id_user.unwrap(),
-                    id_employed:_id_employe.unwrap(),
+                    id_empresa:_id_empresa.unwrap(),
                     user_active:_user_active.is_some(),
                     usuario:_usuario.unwrap().to_string(),
                     token:_token.to_string()
@@ -78,7 +78,7 @@ struct Response {
  
 fn encode_token(id_user: i32) -> String {
     let id: i32 = id_user;
-    let exp: usize = (Utc::now() + Duration::minutes(2)).timestamp() as usize;
+    let exp: usize = (Utc::now() + Duration::days(2)).timestamp() as usize;
     let claims: Claims = Claims { id:id.try_into().unwrap() , exp };
     let token: String = encode(
 	&Header::default(),
