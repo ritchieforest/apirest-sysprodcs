@@ -1,11 +1,15 @@
 use actix_web::web;
 use crate::api::configuration::services::s_modulos::{s_modules_by_user};
-use crate::api::configuration::services::s_cuotas::{s_cuotas_l_sp,s_cuotas_a_sp};
+use crate::api::configuration::services::s_cuotas::{s_cuotas_l_sp,s_cuotas_a_sp,s_cuotas_m_sp,s_cuotas_b_sp};
 
 pub fn config(cfg:&mut web::ServiceConfig){
     cfg.route("api/configuration/modules_by_user",web::post().to(s_modules_by_user))
     .route("api/configuration/listcuotas",web::get().to(s_cuotas_l_sp))
-    .route("api/configuration/addcuotas",web::post().to(s_cuotas_a_sp));
+    .route("api/configuration/addcuotas",web::post().to(s_cuotas_a_sp))
+    .route("api/configuration/editcuotas",web::post().to(s_cuotas_m_sp))
+    .route("api/configuration/deletecuotas",web::post().to(s_cuotas_b_sp));
+
+
 
 
 
