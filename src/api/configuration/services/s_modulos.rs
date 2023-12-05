@@ -13,8 +13,8 @@ pub async fn s_modules_by_user(
 ) -> Result<impl Responder,AppError> {
     //let v = serde_json::from_str().unwrap();
     let value_data:Value=json!({
-        "user":data["user"],
-        "empresa":data["empresa"]
+        "user":data["id_user"],
+        "empresa":data["id_empresa"]
     });
     
     let result = c_modules_by_user(
