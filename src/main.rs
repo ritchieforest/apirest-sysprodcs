@@ -7,6 +7,8 @@ mod extractors_token;
 use crate::database::database_mssql::connect;
 use crate::api::user::route_users;
 use crate::api::configuration::route_configuration;
+use crate::api::productos::route_productos;
+
 
 use actix_web::{
     http::header,
@@ -51,6 +53,8 @@ async fn main() -> std::io::Result<()> {
         //.wrap(bearer_middleware)
         .configure(route_users::config)
         .configure(route_configuration::config)
+        .configure(route_productos::config)
+
 
 
     })

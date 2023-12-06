@@ -1,39 +1,41 @@
-
 use crate::{errors::{AppError,AppErrorType::NotFoundError}}; 
 use async_std::net::TcpStream;
 use tiberius::Client;
 use crate::database::database_mssql;
 use serde_json::{Value, json};
 use std::sync::{Arc, Mutex};
-use serde::{Deserialize, Serialize};
 
- 
-
-pub async fn c_cuotas_b_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
+pub async fn c_categoria_a_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     data: Value
 )-> Result<Value,AppError>{
 
     let mut sql_query=String::new();
     let object=data.to_owned();
-    let sql_param= format!("'B',{},{}",object["descripcion"],object["id"]);
-    sql_query.push_str("c_cuotas_abmlc_sp ");
+    let sql_param= format!("'{}'",object["datajson"]);
+    sql_query.push_str("c_categoria_abmlc_sp ");
     sql_query.push_str(&sql_param);
+    sql_query=sql_query.replace("\\", "").replace("\"'", "'").replace("'\"", "'");
+
     let mut _vec = 
     database_mssql::resolve_data_stored(&sql_query,conexion).
     await.map(|__vec| -> Value{
-        let mut _cuota_new:Value=json!({});
+        let mut _categoria_new:Value=json!({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
                 let _id:Option<i32> = row.get(0);
                 let _descripcion: Option<&str>= row.get(1);
-                _cuota_new=json!({
-                    id:_id.unwrap(),
-                    descripcion:_descripcion.unwrap().to_string(),
+                let _id_padre: Option<i32>= row.get(2);
+                let _cantidad_sub:Option<i32>=row.get(3);
+                _categoria_new=json!({
+                    "id":_id.unwrap(),
+                    "descripcion":_descripcion.unwrap().to_string(),
+                    "pattern_id":_id_padre.unwrap(),
+                    "limit_subcategorias":_cantidad_sub.unwrap()
                 });
 
             }
         }
-        _cuota_new
+        _categoria_new
     })
     .map_err(|err|{
         AppError {
@@ -48,32 +50,37 @@ pub async fn c_cuotas_b_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
         Err(t) => Err(t),
     }
 }
-
-pub async fn c_cuotas_m_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
+pub async fn c_categoria_m_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     data: Value
 )-> Result<Value,AppError>{
 
     let mut sql_query=String::new();
     let object=data.to_owned();
-    let sql_param= format!("'M',{},{}",object["descripcion"],object["id"]);
-    sql_query.push_str("c_cuotas_abmlc_sp ");
+    let sql_param= format!("'{}'",object["datajson"]);
+    sql_query.push_str("c_categoria_abmlc_sp ");
     sql_query.push_str(&sql_param);
+    sql_query=sql_query.replace("\\", "").replace("\"'", "'").replace("'\"", "'");
+
     let mut _vec = 
     database_mssql::resolve_data_stored(&sql_query,conexion).
     await.map(|__vec| -> Value{
-        let mut _cuota_new:Value=json!({});
+        let mut _categoria_new:Value=json!({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
                 let _id:Option<i32> = row.get(0);
                 let _descripcion: Option<&str>= row.get(1);
-                _cuota_new=json!({
-                    id:_id.unwrap(),
-                    descripcion:_descripcion.unwrap().to_string(),
+                let _id_padre: Option<i32>= row.get(2);
+                let _cantidad_sub:Option<i32>=row.get(3);
+                _categoria_new=json!({
+                    "id":_id.unwrap(),
+                    "descripcion":_descripcion.unwrap().to_string(),
+                    "pattern_id":_id_padre.unwrap(),
+                    "limit_subcategorias":_cantidad_sub.unwrap()
                 });
 
             }
         }
-        _cuota_new
+        _categoria_new
     })
     .map_err(|err|{
         AppError {
@@ -88,32 +95,37 @@ pub async fn c_cuotas_m_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
         Err(t) => Err(t),
     }
 }
-
-pub async fn c_cuotas_a_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
+pub async fn c_categoria_b_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     data: Value
 )-> Result<Value,AppError>{
 
     let mut sql_query=String::new();
     let object=data.to_owned();
-    let sql_param= format!("'A',{},NULL",object["descripcion"]);
-    sql_query.push_str("c_cuotas_abmlc_sp ");
+    let sql_param= format!("'{}'",object["datajson"]);
+    sql_query.push_str("c_categoria_abmlc_sp ");
     sql_query.push_str(&sql_param);
+    sql_query=sql_query.replace("\\", "").replace("\"'", "'").replace("'\"", "'");
+
     let mut _vec = 
     database_mssql::resolve_data_stored(&sql_query,conexion).
     await.map(|__vec| -> Value{
-        let mut _cuota_new:Value=json!({});
+        let mut _categoria_new:Value=json!({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
                 let _id:Option<i32> = row.get(0);
                 let _descripcion: Option<&str>= row.get(1);
-                _cuota_new=json!({
-                    id:_id.unwrap(),
-                    descripcion:_descripcion.unwrap().to_string(),
+                let _id_padre: Option<i32>= row.get(2);
+                let _cantidad_sub:Option<i32>=row.get(3);
+                _categoria_new=json!({
+                    "id":_id.unwrap(),
+                    "descripcion":_descripcion.unwrap().to_string(),
+                    "pattern_id":_id_padre.unwrap(),
+                    "limit_subcategorias":_cantidad_sub.unwrap()
                 });
 
             }
         }
-        _cuota_new
+        _categoria_new
     })
     .map_err(|err|{
         AppError {
@@ -128,36 +140,38 @@ pub async fn c_cuotas_a_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
         Err(t) => Err(t),
     }
 }
-
-pub async fn c_cuotas_l_sp(
-    conexion:Arc<Mutex<Client<TcpStream>>>,
+pub async fn c_categoria_l_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     data: Value
-) -> Result<Vec<Value>,AppError> {
-    //declarar las variables para leer    
+)-> Result<Vec<Value>,AppError>{
 
     let mut sql_query=String::new();
     let object=data.to_owned();
-    let sql_param= format!("'L',NULL,NULL");
-    sql_query.push_str("c_cuotas_abmlc_sp ");
+    let sql_param= format!("'{}'",object["datajson"]);
+    sql_query.push_str("c_categoria_abmlc_sp ");
     sql_query.push_str(&sql_param);
+    sql_query=sql_query.replace("\\", "").replace("\"'", "'").replace("'\"", "'");
 
     let mut _vec = 
     database_mssql::resolve_data_stored(&sql_query,conexion).
     await.map(|__vec| -> Vec<Value>{
-        let mut _list_cuotas:Vec<Value>=Vec::new();
+        let mut _categoria_list:Value=Vec::new();
         for i in __vec.into_iter() {
             for row in i.into_iter() {
-                let _id: Option<i32>= row.get(0);
+                let _id:Option<i32> = row.get(0);
                 let _descripcion: Option<&str>= row.get(1);
-                _list_cuotas.push(
+                let _id_padre: Option<i32>= row.get(2);
+                let _cantidad_sub:Option<i32>=row.get(3);
+                _categoria_list.push(
                     json!({
-                    id:_id.unwrap(),
-                    descripcion:_descripcion.unwrap().to_string(),
+                    "id":_id.unwrap(),
+                    "descripcion":_descripcion.unwrap().to_string(),
+                    "pattern_id":_id_padre.unwrap(),
+                    "limit_subcategorias":_cantidad_sub.unwrap()
                 }));
 
             }
         }
-        _list_cuotas
+        _categoria_list
     })
     .map_err(|err|{
         AppError {
@@ -171,6 +185,4 @@ pub async fn c_cuotas_l_sp(
         Ok(t) => Ok(t),
         Err(t) => Err(t),
     }
-    
-
 }

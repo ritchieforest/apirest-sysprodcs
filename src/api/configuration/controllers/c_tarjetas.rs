@@ -3,27 +3,13 @@ use crate::{errors::{AppError,AppErrorType::NotFoundError}};
 use async_std::net::TcpStream;
 use tiberius::Client;
 use crate::database::database_mssql;
-use serde_json::Value;
+use serde_json::{Value, json};
 use std::sync::{Arc, Mutex};
-use serde::{Deserialize, Serialize};
-
-#[derive(Serialize,Deserialize,Debug)]
-pub struct TarjetaList{
-    pub id:i32,
-    pub descripcion:String
-}
-impl Default for TarjetaList {
-    fn default() -> Self {
-        TarjetaList {
-            id:0,
-            descripcion:String::default(),
-        }
-    }
-}
+ 
 
 pub async fn c_tarjetas_b_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     data: Value
-)-> Result<TarjetaList,AppError>{
+)-> Result<Value,AppError>{
 
     let mut sql_query=String::new();
     let object=data.to_owned();
@@ -32,20 +18,20 @@ pub async fn c_tarjetas_b_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     sql_query.push_str(&sql_param);
     let mut _vec = 
     database_mssql::resolve_data_stored(&sql_query,conexion).
-    await.map(|__vec| -> TarjetaList{
-        let mut _cuota_new:TarjetaList=TarjetaList::default();
+    await.map(|__vec| -> Value{
+        let mut _tarjetas_new:Value=json({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
                 let _id:Option<i32> = row.get(0);
                 let _descripcion: Option<&str>= row.get(1);
-                _cuota_new=TarjetaList{
+                _tarjetas_new=json!({
                     id:_id.unwrap(),
                     descripcion:_descripcion.unwrap().to_string(),
-                };
+                });
 
             }
         }
-        _cuota_new
+        _tarjetas_new
     })
     .map_err(|err|{
         AppError {
@@ -63,7 +49,7 @@ pub async fn c_tarjetas_b_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
 
 pub async fn c_tarjetas_m_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     data: Value
-)-> Result<TarjetaList,AppError>{
+)-> Result<Value,AppError>{
 
     let mut sql_query=String::new();
     let object=data.to_owned();
@@ -72,20 +58,20 @@ pub async fn c_tarjetas_m_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     sql_query.push_str(&sql_param);
     let mut _vec = 
     database_mssql::resolve_data_stored(&sql_query,conexion).
-    await.map(|__vec| -> TarjetaList{
-        let mut _cuota_new:TarjetaList=TarjetaList::default();
+    await.map(|__vec| -> Value{
+        let mut _tarjetas_new:Value=json({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
                 let _id:Option<i32> = row.get(0);
                 let _descripcion: Option<&str>= row.get(1);
-                _cuota_new=TarjetaList{
+                _tarjetas_new=json!({
                     id:_id.unwrap(),
                     descripcion:_descripcion.unwrap().to_string(),
-                };
+                });
 
             }
         }
-        _cuota_new
+        _tarjetas_new
     })
     .map_err(|err|{
         AppError {
@@ -103,7 +89,7 @@ pub async fn c_tarjetas_m_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
 
 pub async fn c_tarjetas_a_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     data: Value
-)-> Result<TarjetaList,AppError>{
+)-> Result<Value,AppError>{
 
     let mut sql_query=String::new();
     let object=data.to_owned();
@@ -112,20 +98,20 @@ pub async fn c_tarjetas_a_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     sql_query.push_str(&sql_param);
     let mut _vec = 
     database_mssql::resolve_data_stored(&sql_query,conexion).
-    await.map(|__vec| -> TarjetaList{
-        let mut _cuota_new:TarjetaList=TarjetaList::default();
+    await.map(|__vec| -> Value{
+        let mut _tarjetas_new:Value=json({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
                 let _id:Option<i32> = row.get(0);
                 let _descripcion: Option<&str>= row.get(1);
-                _cuota_new=TarjetaList{
+                _tarjetas_new=json!({
                     id:_id.unwrap(),
                     descripcion:_descripcion.unwrap().to_string(),
-                };
+                });
 
             }
         }
-        _cuota_new
+        _tarjetas_new
     })
     .map_err(|err|{
         AppError {
@@ -144,7 +130,7 @@ pub async fn c_tarjetas_a_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
 pub async fn c_tarjetas_l_sp(
     conexion:Arc<Mutex<Client<TcpStream>>>,
     data: Value
-) -> Result<Vec<TarjetaList>,AppError> {
+) -> Result<Vec<Value>,AppError> {
     //declarar las variables para leer    
 
     let mut sql_query=String::new();
@@ -154,16 +140,16 @@ pub async fn c_tarjetas_l_sp(
 
     let mut _vec = 
     database_mssql::resolve_data_stored(&sql_query,conexion).
-    await.map(|__vec| -> Vec<TarjetaList>{
-        let mut _list_cuotas:Vec<TarjetaList>=Vec::new();
+    await.map(|__vec| -> Vec<Value>{
+        let mut _list_cuotas:Vec<Value>=Vec::new();
         for i in __vec.into_iter() {
             for row in i.into_iter() {
                 let _id: Option<i32>= row.get(0);
                 let _descripcion: Option<&str>= row.get(1);
-                _list_cuotas.push(TarjetaList{
+                _list_cuotas.push(json!({
                     id:_id.unwrap(),
                     descripcion:_descripcion.unwrap().to_string(),
-                });
+                }));
 
             }
         }
