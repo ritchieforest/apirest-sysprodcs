@@ -27,14 +27,13 @@ pub async fn c_configempresas_b_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
         for i in __vec.into_iter() {
             for row in i.into_iter() {
                 let _id:Option<i32> = row.get(0);
-                let _porcentaje: Option<f64>= row.get(1);
+                let _porcentaje: Option<&str>= row.get(1);
                 let _id_tarjeta:Option<i32> = row.get(3);
                 let _id_cuota:Option<i32> = row.get(2);
-
-                
+            
                 _config_cuotas=json!({
                     "id":_id.unwrap(),
-                    "porcentaje":_porcentaje.unwrap(),
+                    "porcentaje":_porcentaje.unwrap().to_string(),
                     "id_cuota":_id_cuota.unwrap(),
                     "id_tarjeta":_id_tarjeta.unwrap()
                 });
@@ -75,18 +74,16 @@ pub async fn c_configempresas_m_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
         for i in __vec.into_iter() {
             for row in i.into_iter() {
                 let _id:Option<i32> = row.get(0);
-                let _porcentaje: Option<f64>= row.get(1);
+                let _porcentaje: Option<&str>= row.get(1);
                 let _id_tarjeta:Option<i32> = row.get(3);
                 let _id_cuota:Option<i32> = row.get(2);
-
-                
+            
                 _config_cuotas=json!({
                     "id":_id.unwrap(),
-                    "porcentaje":_porcentaje.unwrap(),
+                    "porcentaje":_porcentaje.unwrap().to_string(),
                     "id_cuota":_id_cuota.unwrap(),
                     "id_tarjeta":_id_tarjeta.unwrap()
                 });
-
             }
         }
         _config_cuotas
@@ -115,7 +112,6 @@ pub async fn c_configempresas_a_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     sql_query.push_str("c_configempresas_abmlc_sp ");
     sql_query.push_str(&sql_param);
     sql_query=sql_query.replace("\\", "").replace("\"'", "'").replace("'\"", "'");
-    println!("{}",sql_query);
     let mut _vec = 
     database_mssql::resolve_data_stored(&sql_query,conexion).
     await.map(|__vec| -> Value{
@@ -126,8 +122,7 @@ pub async fn c_configempresas_a_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
                 let _porcentaje: Option<&str>= row.get(1);
                 let _id_tarjeta:Option<i32> = row.get(3);
                 let _id_cuota:Option<i32> = row.get(2);
-
-                
+            
                 _config_cuotas=json!({
                     "id":_id.unwrap(),
                     "porcentaje":_porcentaje.unwrap().to_string(),
@@ -179,7 +174,6 @@ pub async fn c_configempresas_l_sp(
                 let _cuota:Option<&str>=row.get(5);
                 let _tarjeta:Option<&str>=row.get(3);
 
-                
                 _list_config_cuotas.push(json!({
                     "id":_id.unwrap(),
                     "porcentaje":_porcentaje.unwrap().to_string(),
