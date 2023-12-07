@@ -19,14 +19,14 @@ pub async fn c_tarjetas_b_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     let mut _vec = 
     database_mssql::resolve_data_stored(&sql_query,conexion).
     await.map(|__vec| -> Value{
-        let mut _tarjetas_new:Value=json({});
+        let mut _tarjetas_new:Value=json!({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
                 let _id:Option<i32> = row.get(0);
                 let _descripcion: Option<&str>= row.get(1);
                 _tarjetas_new=json!({
-                    id:_id.unwrap(),
-                    descripcion:_descripcion.unwrap().to_string(),
+                    "id":_id.unwrap(),
+                    "descripcion":_descripcion.unwrap().to_string(),
                 });
 
             }
@@ -59,14 +59,14 @@ pub async fn c_tarjetas_m_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     let mut _vec = 
     database_mssql::resolve_data_stored(&sql_query,conexion).
     await.map(|__vec| -> Value{
-        let mut _tarjetas_new:Value=json({});
+        let mut _tarjetas_new:Value=json!({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
                 let _id:Option<i32> = row.get(0);
                 let _descripcion: Option<&str>= row.get(1);
                 _tarjetas_new=json!({
-                    id:_id.unwrap(),
-                    descripcion:_descripcion.unwrap().to_string(),
+                    "id":_id.unwrap(),
+                    "descripcion":_descripcion.unwrap().to_string(),
                 });
 
             }
@@ -99,14 +99,14 @@ pub async fn c_tarjetas_a_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     let mut _vec = 
     database_mssql::resolve_data_stored(&sql_query,conexion).
     await.map(|__vec| -> Value{
-        let mut _tarjetas_new:Value=json({});
+        let mut _tarjetas_new:Value=json!({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
                 let _id:Option<i32> = row.get(0);
                 let _descripcion: Option<&str>= row.get(1);
                 _tarjetas_new=json!({
-                    id:_id.unwrap(),
-                    descripcion:_descripcion.unwrap().to_string(),
+                    "id":_id.unwrap(),
+                    "descripcion":_descripcion.unwrap().to_string(),
                 });
 
             }
@@ -147,8 +147,8 @@ pub async fn c_tarjetas_l_sp(
                 let _id: Option<i32>= row.get(0);
                 let _descripcion: Option<&str>= row.get(1);
                 _list_cuotas.push(json!({
-                    id:_id.unwrap(),
-                    descripcion:_descripcion.unwrap().to_string(),
+                    "id":_id.unwrap(),
+                    "descripcion":_descripcion.unwrap().to_string(),
                 }));
 
             }

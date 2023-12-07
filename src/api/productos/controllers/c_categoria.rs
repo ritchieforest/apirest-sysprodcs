@@ -154,7 +154,7 @@ pub async fn c_categoria_l_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
     let mut _vec = 
     database_mssql::resolve_data_stored(&sql_query,conexion).
     await.map(|__vec| -> Vec<Value>{
-        let mut _categoria_list:Value=Vec::new();
+        let mut _categoria_list:Vec<Value>=Vec::new();
         for i in __vec.into_iter() {
             for row in i.into_iter() {
                 let _id:Option<i32> = row.get(0);

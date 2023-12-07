@@ -6,6 +6,7 @@ pub mod database_mssql{
     use tiberius::{Client, Config, AuthMethod};
     use std::sync::{Arc, Mutex};
     use async_std::net::TcpStream;
+    use serde_json::{json, Value};
 
     use crate::errors::{AppError, AppErrorType};
     pub async fn connect()->anyhow::Result<Client<TcpStream>>{
@@ -35,5 +36,26 @@ pub mod database_mssql{
 
         let response=stream.into_results().await;
         return response
+    }
+    pub fn errno_resolved(row:Row)->Value{
+        let mut _errno: Value = json!({});
+        let _error_number: Option<i32> = row.get(0);
+        let _error_state: Option<i32> = row.get(1);
+        let _error_severity: Option<i32> = row.get(2);
+        let _error_procedure: Option<&str> = row.get(3);
+        let _error_line: Option<i32> = row.get(4);
+        let _error_msg: Option<&str> = row.get(5);
+        let _error_store: Option<&str> = row.get(7);
+        _errno = json!({
+            "status":false,
+            "error_number":_error_number.unwrap(),
+            "error_severity":_error_severity.unwrap(),
+            "error_procedure":_error_procedure.unwrap().to_string(),
+            "error_line":_error_line.unwrap(),
+            "error_msg":_error_msg.unwrap().to_string(),
+            "store":_error_store.unwrap().to_string()
+        });
+        return _errno
+        
     }
 }
