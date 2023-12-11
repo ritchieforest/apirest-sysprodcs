@@ -134,8 +134,7 @@ pub async fn c_configempresas_a_sp(
                             "status":true,
                             "id":_id.unwrap(),
                         });
-                    } else {
-                        
+                    } else { 
                         _config_cuotas=database_mssql::errno_resolved(row);
                     }
                 }
@@ -179,21 +178,28 @@ pub async fn c_configempresas_l_sp(
             let mut _list_config_cuotas: Vec<Value> = Vec::new();
             for i in __vec.into_iter() {
                 for row in i.into_iter() {
-                    let _id: Option<i32> = row.get(0);
-                    let _porcentaje: Option<&str> = row.get(1);
-                    let _id_tarjeta: Option<i32> = row.get(2);
-                    let _id_cuota: Option<i32> = row.get(4);
-                    let _cuota: Option<&str> = row.get(5);
-                    let _tarjeta: Option<&str> = row.get(3);
-
-                    _list_config_cuotas.push(json!({
-                        "id":_id.unwrap(),
-                        "porcentaje":_porcentaje.unwrap().to_string(),
-                        "id_cuota":_id_cuota.unwrap(),
-                        "id_tarjeta":_id_tarjeta.unwrap(),
-                        "cuota":_cuota.unwrap().to_string(),
-                        "tarjeta":_tarjeta.unwrap().to_string()
-                    }));
+                    let _type_result: Option<&str> = row.get("TipeResult");
+                    if _type_result.unwrap().to_string().contains("Exito") {
+                        let _id: Option<i32> = row.get(0);
+                        let _porcentaje: Option<&str> = row.get(1);
+                        let _id_tarjeta: Option<i32> = row.get(2);
+                        let _id_cuota: Option<i32> = row.get(4);
+                        let _cuota: Option<&str> = row.get(5);
+                        let _tarjeta: Option<&str> = row.get(3);
+    
+                        _list_config_cuotas.push(json!({
+                            "id":_id.unwrap(),
+                            "porcentaje":_porcentaje.unwrap().to_string(),
+                            "id_cuota":_id_cuota.unwrap(),
+                            "id_tarjeta":_id_tarjeta.unwrap(),
+                            "cuota":_cuota.unwrap().to_string(),
+                            "tarjeta":_tarjeta.unwrap().to_string()
+                        }));
+                    } else { 
+                        _list_config_cuotas.push(database_mssql::errno_resolved(row));
+                        break;
+                    }
+                    
                 }
             }
             _list_config_cuotas

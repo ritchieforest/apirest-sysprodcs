@@ -22,12 +22,19 @@ pub async fn c_tarjetas_b_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
         let mut _tarjetas_new:Value=json!({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
-                let _id:Option<i32> = row.get(0);
-                let _descripcion: Option<&str>= row.get(1);
-                _tarjetas_new=json!({
-                    "id":_id.unwrap(),
-                    "descripcion":_descripcion.unwrap().to_string(),
-                });
+                let _type_result: Option<&str> = row.get("TipeResult");
+                    if _type_result.unwrap().to_string().contains("Exito") {
+                        let _id:Option<i32> = row.get(0);
+                        let _descripcion: Option<&str>= row.get(1);
+                        _tarjetas_new=json!({
+                            "status":true
+                            "id":_id.unwrap(),
+                            "descripcion":_descripcion.unwrap().to_string(),
+                        });
+                    } else {
+                        
+                        _tarjetas_new=database_mssql::errno_resolved(row);
+                    }
 
             }
         }
@@ -62,12 +69,19 @@ pub async fn c_tarjetas_m_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
         let mut _tarjetas_new:Value=json!({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
-                let _id:Option<i32> = row.get(0);
-                let _descripcion: Option<&str>= row.get(1);
-                _tarjetas_new=json!({
-                    "id":_id.unwrap(),
-                    "descripcion":_descripcion.unwrap().to_string(),
-                });
+                let _type_result: Option<&str> = row.get("TipeResult");
+                    if _type_result.unwrap().to_string().contains("Exito") {
+                         
+                        let _id:Option<i32> = row.get(0);
+                        let _descripcion: Option<&str>= row.get(1);
+                        _tarjetas_new=json!({
+                            "id":_id.unwrap(),
+                            "descripcion":_descripcion.unwrap().to_string(),
+                        });
+                    } else {
+                        
+                        _tarjetas_new=database_mssql::errno_resolved(row);
+                    }
 
             }
         }
@@ -102,12 +116,20 @@ pub async fn c_tarjetas_a_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
         let mut _tarjetas_new:Value=json!({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
-                let _id:Option<i32> = row.get(0);
-                let _descripcion: Option<&str>= row.get(1);
-                _tarjetas_new=json!({
-                    "id":_id.unwrap(),
-                    "descripcion":_descripcion.unwrap().to_string(),
-                });
+                let _type_result: Option<&str> = row.get("TipeResult");
+                    if _type_result.unwrap().to_string().contains("Exito") {
+                        
+                        let _id:Option<i32> = row.get(0);
+                        let _descripcion: Option<&str>= row.get(1);
+                        _tarjetas_new=json!({
+                            "status":"true"
+                            "id":_id.unwrap(),
+                            "descripcion":_descripcion.unwrap().to_string(),
+                        });
+                    } else {
+                        
+                        _tarjetas_new=database_mssql::errno_resolved(row);
+                    }
 
             }
         }

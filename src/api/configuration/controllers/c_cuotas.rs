@@ -21,12 +21,19 @@ pub async fn c_cuotas_b_sp(
             let mut _cuota_new: Value = json!({});
             for i in __vec.into_iter() {
                 for row in i.into_iter() {
-                    let _id: Option<i32> = row.get(0);
-                    let _descripcion: Option<&str> = row.get(1);
-                    _cuota_new = json!({
-                        "id":_id.unwrap(),
-                        "descripcion":_descripcion.unwrap().to_string(),
-                    });
+                    let _type_result: Option<&str> = row.get("TipeResult");
+                    if _type_result.unwrap().to_string().contains("Exito") {
+                        let _id: Option<i32> = row.get(0);
+                        let _descripcion: Option<&str> = row.get(1);
+                        _cuota_new = json!({
+                            "status":true,
+                            "id":_id.unwrap(),
+                            "descripcion":_descripcion.unwrap().to_string(),
+                        });
+                    } else { 
+                        _cuota_new=database_mssql::errno_resolved(row);
+                    }
+                    
                 }
             }
             _cuota_new
@@ -35,7 +42,7 @@ pub async fn c_cuotas_b_sp(
             error_type: NotFoundError,
             cause: Some(format!("{}", err.to_string())),
             message: Some(format!(
-                "Todo list {:?} not found.",
+                "{:?}",
                 err.to_string().replace('"', "")
             )),
             debug_stores: Some(format!("{}", sql_query.replace('"', "'"))),
@@ -61,12 +68,19 @@ pub async fn c_cuotas_m_sp(
             let mut _cuota_new: Value = json!({});
             for i in __vec.into_iter() {
                 for row in i.into_iter() {
-                    let _id: Option<i32> = row.get(0);
-                    let _descripcion: Option<&str> = row.get(1);
-                    _cuota_new = json!({
-                        "id":_id.unwrap(),
-                        "descripcion":_descripcion.unwrap().to_string(),
-                    });
+                    let _type_result: Option<&str> = row.get("TipeResult");
+                    if _type_result.unwrap().to_string().contains("Exito") {
+                        let _id: Option<i32> = row.get(0);
+                        let _descripcion: Option<&str> = row.get(1);
+                        _cuota_new = json!({
+                            "status":true
+                            "id":_id.unwrap(),
+                            "descripcion":_descripcion.unwrap().to_string(),
+                        });
+                    } else { 
+                        _cuota_new=database_mssql::errno_resolved(row);
+                    } 
+                    
                 }
             }
             _cuota_new
@@ -101,12 +115,19 @@ pub async fn c_cuotas_a_sp(
             let mut _cuota_new: Value = json!({});
             for i in __vec.into_iter() {
                 for row in i.into_iter() {
-                    let _id: Option<i32> = row.get(0);
-                    let _descripcion: Option<&str> = row.get(1);
-                    _cuota_new = json!({
-                        "id":_id.unwrap(),
-                        "descripcion":_descripcion.unwrap().to_string(),
-                    });
+                    let _type_result: Option<&str> = row.get("TipeResult");
+                    if _type_result.unwrap().to_string().contains("Exito") {
+                        
+                        let _id: Option<i32> = row.get(0);
+                        let _descripcion: Option<&str> = row.get(1);
+                        _cuota_new = json!({
+                            "status":true,
+                            "id":_id.unwrap(),
+                            "descripcion":_descripcion.unwrap().to_string(),
+                        });
+                    } else { 
+                        _cuota_new=database_mssql::errno_resolved(row);
+                    }
                 }
             }
             _cuota_new
@@ -144,12 +165,18 @@ pub async fn c_cuotas_l_sp(
             let mut _list_cuotas: Vec<Value> = Vec::new();
             for i in __vec.into_iter() {
                 for row in i.into_iter() {
-                    let _id: Option<i32> = row.get(0);
-                    let _descripcion: Option<&str> = row.get(1);
-                    _list_cuotas.push(json!({
-                            "id":_id.unwrap(),
-                            "descripcion":_descripcion.unwrap().to_string(),
-                    }));
+                    let _type_result: Option<&str> = row.get("TipeResult");
+                    if _type_result.unwrap().to_string().contains("Exito") {
+                         
+                        let _id: Option<i32> = row.get(0);
+                        let _descripcion: Option<&str> = row.get(1);
+                        _list_cuotas.push(json!({
+                                "id":_id.unwrap(),
+                                "descripcion":_descripcion.unwrap().to_string(),
+                        }));
+                    } else { 
+                        _list_cuotas=database_mssql::errno_resolved(row);
+                    }
                 }
             }
             _list_cuotas
