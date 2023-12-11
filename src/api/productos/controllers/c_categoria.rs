@@ -22,16 +22,21 @@ pub async fn c_categoria_a_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
         let mut _categoria_new:Value=json!({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
-                let _id:Option<i32> = row.get(0);
-                let _descripcion: Option<&str>= row.get(1);
-                let _id_padre: Option<i32>= row.get(2);
-                let _cantidad_sub:Option<i32>=row.get(3);
-                _categoria_new=json!({
-                    "id":_id.unwrap(),
-                    "descripcion":_descripcion.unwrap().to_string(),
-                    "pattern_id":_id_padre.unwrap(),
-                    "limit_subcategorias":_cantidad_sub.unwrap()
-                });
+                let _type_result: Option<&str> = row.get("TipeResult");
+                    if _type_result.unwrap().to_string().contains("Exito") {
+                        let _id:Option<i32> = row.get(0);
+                        let _descripcion: Option<&str>= row.get(1);
+                        let _id_padre: Option<i32>= row.get(2);
+                        let _cantidad_sub:Option<i32>=row.get(3);
+                        _categoria_new=json!({
+                            "id":_id.unwrap(),
+                            "descripcion":_descripcion.unwrap().to_string(),
+                            "pattern_id":_id_padre.unwrap(),
+                            "limit_subcategorias":_cantidad_sub.unwrap()
+                        });
+                    } else { 
+                        _categoria_new=database_mssql::errno_resolved(row);
+                    }
 
             }
         }
@@ -67,16 +72,22 @@ pub async fn c_categoria_m_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
         let mut _categoria_new:Value=json!({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
-                let _id:Option<i32> = row.get(0);
-                let _descripcion: Option<&str>= row.get(1);
-                let _id_padre: Option<i32>= row.get(2);
-                let _cantidad_sub:Option<i32>=row.get(3);
-                _categoria_new=json!({
-                    "id":_id.unwrap(),
-                    "descripcion":_descripcion.unwrap().to_string(),
-                    "pattern_id":_id_padre.unwrap(),
-                    "limit_subcategorias":_cantidad_sub.unwrap()
-                });
+                let _type_result: Option<&str> = row.get("TipeResult");
+                    if _type_result.unwrap().to_string().contains("Exito") {
+                        
+                        let _id:Option<i32> = row.get(0);
+                        let _descripcion: Option<&str>= row.get(1);
+                        let _id_padre: Option<i32>= row.get(2);
+                        let _cantidad_sub:Option<i32>=row.get(3);
+                        _categoria_new=json!({
+                            "id":_id.unwrap(),
+                            "descripcion":_descripcion.unwrap().to_string(),
+                            "pattern_id":_id_padre.unwrap(),
+                            "limit_subcategorias":_cantidad_sub.unwrap()
+                        });
+                    } else { 
+                        _categoria_new=database_mssql::errno_resolved(row);
+                    }
 
             }
         }
@@ -112,16 +123,21 @@ pub async fn c_categoria_b_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
         let mut _categoria_new:Value=json!({});
         for i in __vec.into_iter() {
             for row in i.into_iter() {
-                let _id:Option<i32> = row.get(0);
-                let _descripcion: Option<&str>= row.get(1);
-                let _id_padre: Option<i32>= row.get(2);
-                let _cantidad_sub:Option<i32>=row.get(3);
-                _categoria_new=json!({
-                    "id":_id.unwrap(),
-                    "descripcion":_descripcion.unwrap().to_string(),
-                    "pattern_id":_id_padre.unwrap(),
-                    "limit_subcategorias":_cantidad_sub.unwrap()
-                });
+                let _type_result: Option<&str> = row.get("TipeResult");
+                    if _type_result.unwrap().to_string().contains("Exito") {
+                        let _id:Option<i32> = row.get(0);
+                        let _descripcion: Option<&str>= row.get(1);
+                        let _id_padre: Option<i32>= row.get(2);
+                        let _cantidad_sub:Option<i32>=row.get(3);
+                        _categoria_new=json!({
+                            "id":_id.unwrap(),
+                            "descripcion":_descripcion.unwrap().to_string(),
+                            "pattern_id":_id_padre.unwrap(),
+                            "limit_subcategorias":_cantidad_sub.unwrap()
+                        });
+                    } else { 
+                        _categoria_new=database_mssql::errno_resolved(row);
+                    }
 
             }
         }
@@ -157,6 +173,7 @@ pub async fn c_categoria_l_sp(conexion:Arc<Mutex<Client<TcpStream>>>,
         let mut _categoria_list:Vec<Value>=Vec::new();
         for i in __vec.into_iter() {
             for row in i.into_iter() {
+                
                 let _id:Option<i32> = row.get(0);
                 let _descripcion: Option<&str>= row.get(1);
                 let _id_padre: Option<i32>= row.get(2);

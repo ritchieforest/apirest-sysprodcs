@@ -8,20 +8,19 @@ use serde_json::{json, Value};
 use std::sync::{Arc, Mutex};
 use tiberius::{numeric::Numeric, Client};
 
-pub async fn c_configempresas_b_sp(
+pub async fn c_proveedores_b_sp(
     conexion: Arc<Mutex<Client<TcpStream>>>,
     data: Value,
 ) -> Result<Value, AppError> {
     let mut sql_query = String::new();
     let object = data.to_owned();
     let sql_param = format!("'{}'", object["datajson"]);
-    sql_query.push_str("c_configempresas_abmlc_sp ");
+    sql_query.push_str("c_proveedor_abmlc_sp ");
     sql_query.push_str(&sql_param);
     sql_query = sql_query
         .replace("\\", "")
         .replace("\"'", "'")
         .replace("'\"", "'");
-    println!("{}",sql_query);
     let mut _vec = database_mssql::resolve_data_stored(&sql_query, conexion)
         .await
         .map(|__vec| -> Value {
@@ -58,14 +57,14 @@ pub async fn c_configempresas_b_sp(
     }
 }
 
-pub async fn c_configempresas_m_sp(
+pub async fn c_proveedores_m_sp(
     conexion: Arc<Mutex<Client<TcpStream>>>,
     data: Value,
 ) -> Result<Value, AppError> {
     let mut sql_query = String::new();
     let object = data.to_owned();
     let sql_param = format!("'{}'", object["datajson"]);
-    sql_query.push_str("c_configempresas_abmlc_sp ");
+    sql_query.push_str("c_proveedor_abmlc_sp ");
     sql_query.push_str(&sql_param);
     sql_query = sql_query
         .replace("\\", "")
@@ -108,7 +107,7 @@ pub async fn c_configempresas_m_sp(
     }
 }
 
-pub async fn c_configempresas_a_sp(
+pub async fn c_proveedores_a_sp(
     conexion: Arc<Mutex<Client<TcpStream>>>,
     data: Value,
 ) -> Result<Value, AppError> {
@@ -156,7 +155,7 @@ pub async fn c_configempresas_a_sp(
     }
 }
 
-pub async fn c_configempresas_l_sp(
+pub async fn c_proveedores_l_sp(
     conexion: Arc<Mutex<Client<TcpStream>>>,
     data: Value,
 ) -> Result<Vec<Value>, AppError> {
