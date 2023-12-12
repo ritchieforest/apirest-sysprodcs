@@ -73,7 +73,7 @@ pub async fn c_cuotas_m_sp(
                         let _id: Option<i32> = row.get(0);
                         let _descripcion: Option<&str> = row.get(1);
                         _cuota_new = json!({
-                            "status":true
+                            "status":true,
                             "id":_id.unwrap(),
                             "descripcion":_descripcion.unwrap().to_string(),
                         });
@@ -175,7 +175,7 @@ pub async fn c_cuotas_l_sp(
                                 "descripcion":_descripcion.unwrap().to_string(),
                         }));
                     } else { 
-                        _list_cuotas=database_mssql::errno_resolved(row);
+                        _list_cuotas.push(database_mssql::errno_resolved(row));
                     }
                 }
             }
