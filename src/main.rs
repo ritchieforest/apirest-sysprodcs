@@ -8,6 +8,7 @@ use crate::database::database_mssql::connect;
 use crate::api::user::route_users;
 use crate::api::configuration::route_configuration;
 use crate::api::productos::route_productos;
+use crate::api::proveedor::route_proveedor;
 
 
 use actix_web::{
@@ -54,6 +55,8 @@ async fn main() -> std::io::Result<()> {
         .configure(route_users::config)
         .configure(route_configuration::config)
         .configure(route_productos::config)
+        .configure(route_proveedor::config)
+
 
 
 
