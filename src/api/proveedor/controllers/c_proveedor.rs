@@ -114,7 +114,7 @@ pub async fn c_proveedores_a_sp(
     let mut sql_query = String::new();
     let object = data.to_owned();
     let sql_param = format!("'{}'", object["datajson"]);
-    sql_query.push_str("c_configempresas_abmlc_sp ");
+    sql_query.push_str("c_proveedor_abmlc_sp ");
     sql_query.push_str(&sql_param);
     sql_query = sql_query
         .replace("\\", "")
@@ -164,7 +164,7 @@ pub async fn c_proveedores_l_sp(
     let mut sql_query = String::new();
     let object = data.to_owned();
     let sql_param = format!("'{}'", object["datajson"]);
-    sql_query.push_str("c_configempresas_abmlc_sp ");
+    sql_query.push_str("c_proveedor_abmlc_sp ");
     sql_query.push_str(&sql_param);
     sql_query = sql_query
         .replace("\\", "")

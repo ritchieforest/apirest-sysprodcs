@@ -49,7 +49,8 @@ end
 else if @operacion='B'
 begin
  if @id_proveedor=0 or not exists (
-        select 1 from sys_prov_01_proveedor where id_sysprov01=@id_proveedor
+        select 1 from sys_prov_01_proveedor 
+        where id_sysprov01=@id_proveedor
     )
     begin
         RAISERROR (15600, -1, -1, 'No existe el elemento que desea modificar');
